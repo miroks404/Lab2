@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <style name="maths_expressions_text">
+        <item name="android:textSize">48sp</item>
+        <item name="android:textColor">@color/maths_expressions_color</item>
+    </style>
+    
+</resources>

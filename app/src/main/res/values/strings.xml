@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Lab2</string>
+    <string name="equals_text">=</string>
+    <string name="check_result_button_text">Отправить</string>
+    <string name="answer_error_text">Введите число!</string>
+    <string name="answer_is_true_text">Правильно!</string>
+    <string name="answer_is_false_text">Неправильно :(</string>
+    <string name="go_back_text">Еще раз</string>
+</resources>
