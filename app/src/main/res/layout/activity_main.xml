@@ -46,10 +46,13 @@
             android:text="@string/equals_text" />
 
         <EditText
-            style="@style/maths_expressions_text"
             android:id="@+id/etResult"
+            style="@style/maths_expressions_text"
+            android:textSize="24sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="@string/enter_number_hint_text"/>
 
     </LinearLayout>
 

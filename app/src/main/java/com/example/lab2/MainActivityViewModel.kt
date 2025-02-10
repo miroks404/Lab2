@@ -3,6 +3,7 @@ package com.example.lab2
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.math.BigDecimal
 import java.math.RoundingMode
 
 class MainActivityViewModel : ViewModel() {
@@ -51,7 +52,8 @@ class MainActivityViewModel : ViewModel() {
             '*' -> (firstNumber * secondNumber).toBigDecimal().setScale(1, RoundingMode.HALF_UP)
                 .toString()
 
-            '/' -> (firstNumber / secondNumber).toBigDecimal().setScale(1, RoundingMode.HALF_UP)
+            '/' -> BigDecimal(firstNumber)
+                .divide(BigDecimal(secondNumber), 1, RoundingMode.HALF_UP)
                 .toString()
 
             else -> "0.0"

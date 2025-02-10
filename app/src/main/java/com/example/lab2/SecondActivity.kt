@@ -2,10 +2,7 @@ package com.example.lab2
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.lab2.databinding.ActivitySecondBinding
 
 class SecondActivity : AppCompatActivity() {
@@ -17,7 +14,9 @@ class SecondActivity : AppCompatActivity() {
         binding = ActivitySecondBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.tvResult.text = intent.getStringExtra("RESULT_KEY")
+        val result = intent.extras?.getInt("RESULT_KEY")
+
+        binding.tvResult.text = result?.let { getString(it) }
 
         binding.bBack.setOnClickListener {
             val intent = Intent(this@SecondActivity, MainActivity::class.java)

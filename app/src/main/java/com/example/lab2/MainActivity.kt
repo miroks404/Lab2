@@ -6,13 +6,14 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lab2.databinding.ActivityMainBinding
-import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
     private val viewModel: MainActivityViewModel by viewModels()
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +23,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadExpression()
         viewModel.checkResult()
 
+        var trueResult: String? = null
+
         viewModel.uiState.observe(this) { state ->
 
             binding.tvFirstNumber.text = state.firstNumberOfExpression.toString()
             binding.tvAction.text = state.action.toString()
             binding.tvSecondNumber.text = state.secondNumberOfExpression.toString()
+
+            trueResult = state.result
 
         }
 
@@ -40,17 +45,18 @@ class MainActivity : AppCompatActivity() {
             val userAnswer = try {
                 binding.etResult.text.toString()
             } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
-            val intent = Intent(this@MainActivity, SecondActivity::class.java)
-
-            val result = if(viewModel.uiState.value?.result == userAnswer) {
+            val result = if(trueResult == userAnswer) {
                 R.string.answer_is_true_text
             } else {
                 R.string.answer_is_false_text
             }
+
+            val intent = Intent(this@MainActivity, SecondActivity::class.java)
 
             intent.putExtra("RESULT_KEY", result)
 

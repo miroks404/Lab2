@@ -6,4 +6,5 @@
     <string name="answer_is_true_text">Правильно!</string>
     <string name="answer_is_false_text">Неправильно :(</string>
     <string name="go_back_text">Еще раз</string>
+    <string name="enter_number_hint_text">Введите число</string>
 </resources>
