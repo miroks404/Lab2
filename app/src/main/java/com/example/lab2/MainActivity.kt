@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         binding.bCheckResult.setOnClickListener {
 
             if (binding.etResult.text.isEmpty()) {
-                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -48,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val result = if(trueResult == userAnswer) {
+            val result = if (trueResult == userAnswer) {
                 R.string.answer_is_true_text
             } else {
                 R.string.answer_is_false_text
