@@ -23,10 +23,6 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.uiState.observe(this) { state ->
 
-            binding.tvFirstNumber.text = state.firstNumberOfExpression.toString()
-            binding.tvAction.text = state.action.toString()
-            binding.tvSecondNumber.text = state.secondNumberOfExpression.toString()
-
             when (state.actionState) {
                 ActionState.DEFAULT -> {
                     binding.tvFirstNumber.text = state.firstNumberOfExpression.toString()
