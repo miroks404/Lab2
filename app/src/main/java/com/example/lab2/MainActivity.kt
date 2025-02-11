@@ -21,48 +21,35 @@ class MainActivity : AppCompatActivity() {
         viewModel.loadExpression()
         viewModel.checkResult()
 
-        var trueResult: String? = null
-
         viewModel.uiState.observe(this) { state ->
 
-            binding.tvFirstNumber.text = state.firstNumberOfExpression.toString()
-            binding.tvAction.text = state.action.toString()
-            binding.tvSecondNumber.text = state.secondNumberOfExpression.toString()
-
-            trueResult = state.result
+            when (state.actionState) {
+                ActionState.DEFAULT -> {
+                    binding.tvFirstNumber.text = state.firstNumberOfExpression.toString()
+                    binding.tvAction.text = state.action.toString()
+                    binding.tvSecondNumber.text = state.secondNumberOfExpression.toString()
+                }
+                ActionState.OPEN_ACTIVITY_TRUE -> openResultActivity(R.string.answer_is_true_text)
+                ActionState.OPEN_ACTIVITY_FALSE -> openResultActivity(R.string.answer_is_false_text)
+                ActionState.ERROR -> Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT).show()
+            }
 
         }
 
         binding.bCheckResult.setOnClickListener {
 
-            if (binding.etResult.text.isEmpty()) {
-                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val userAnswer = try {
-                binding.etResult.text.toString()
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, R.string.answer_error_text, Toast.LENGTH_SHORT)
-                    .show()
-                return@setOnClickListener
-            }
-
-            val result = if (trueResult == userAnswer) {
-                R.string.answer_is_true_text
-            } else {
-                R.string.answer_is_false_text
-            }
-
-            val intent = Intent(this@MainActivity, SecondActivity::class.java)
-
-            intent.putExtra("RESULT_KEY", result)
-
-            startActivity(intent)
+            viewModel.sendResult(binding.etResult.text.toString())
 
         }
 
+    }
+
+    private fun openResultActivity(resultMessageId: Int) {
+        val intent = Intent(this@MainActivity, SecondActivity::class.java)
+
+        intent.putExtra("RESULT_KEY", resultMessageId)
+
+        startActivity(intent)
     }
 
 }

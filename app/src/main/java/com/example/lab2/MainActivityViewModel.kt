@@ -6,6 +6,13 @@ import androidx.lifecycle.ViewModel
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+enum class ActionState {
+    DEFAULT,
+    OPEN_ACTIVITY_TRUE,
+    OPEN_ACTIVITY_FALSE,
+    ERROR,
+}
+
 class MainActivityViewModel : ViewModel() {
 
     data class MainActivityUIState(
@@ -13,6 +20,7 @@ class MainActivityViewModel : ViewModel() {
         val action: Char? = null,
         val secondNumberOfExpression: Int? = null,
         val result: String? = null,
+        val actionState: ActionState = ActionState.DEFAULT
     )
 
     private val _uiState = MutableLiveData(MainActivityUIState())
@@ -36,6 +44,21 @@ class MainActivityViewModel : ViewModel() {
                     it.secondNumberOfExpression ?: 0,
                     it.action ?: '+'
                 )
+            }
+        )
+    }
+
+    fun sendResult(userAnswer: String) {
+        _uiState.value = _uiState.value?.copy(
+            actionState =
+            if (validateAnswer(userAnswer)) {
+                if (_uiState.value?.result == userAnswer) {
+                    ActionState.OPEN_ACTIVITY_TRUE
+                } else {
+                    ActionState.OPEN_ACTIVITY_FALSE
+                }
+            } else {
+                ActionState.ERROR
             }
         )
     }
@@ -64,5 +87,17 @@ class MainActivityViewModel : ViewModel() {
             result
         }
         return result
+    }
+
+    private fun validateAnswer(userAnswer: String): Boolean {
+        if (userAnswer.isEmpty()) {
+            return false
+        }
+        try {
+            userAnswer.toDouble()
+        } catch (e: Exception) {
+            return false
+        }
+        return true
     }
 }
